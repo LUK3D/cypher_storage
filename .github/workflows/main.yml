@@ -1,0 +1,26 @@
+name: Linting & Testing
+on: 
+  pull_request:
+  push:
+jobs:
+  lint-test:
+    name: Code validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Action
+        uses: actions/checkout@v3
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.5'
+          channel: 'stable'
+      - name: Get packages in a Flutter project
+        run: flutter pub get
+      - name: Analize code
+        uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true
+          fatal-warnings: true
+          annotate: true
+          annotate-only: false
+          working-directory: ./
